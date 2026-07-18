@@ -1,674 +1,625 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.7">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>memory walt — paper boat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF3E7;
+    --paper:#FFFDF8;
+    --ink:#4A2E1C;
+    --brown:#6B4226;
+    --rust:#C1602A;
+    --peach:#F3C6A0;
+    --mint:#BFE1C4;
+    --butter:#F6E2A0;
+    --sky:#A9D6E5;
+    --blush:#F0B8C6;
+    --line: rgba(74,46,28,0.16);
+    --font-display:'Caveat', cursive;
+    --font-body:'Quicksand', sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:var(--font-body);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  a{color:inherit;}
+
+  .nav{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:18px 6vw;
+    background:var(--paper);
+    border-bottom:2px solid var(--line);
+    position:sticky;
+    top:0;
+    z-index:50;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .brand-name{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:28px;
+    line-height:1;
+    color:var(--brown);
+  }
+  .brand-sub{
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--rust);
+    display:block;
+    margin-top:2px;
+  }
+
+  .hero{
+    position:relative;
+    padding:64px 6vw 40px;
+    text-align:center;
+    overflow:hidden;
+  }
+  .birds{ position:absolute; top:30px; width:70px; opacity:.55; }
+  .birds.b1{ left:4vw; top:60px; }
+  .birds.b2{ right:6vw; top:20px; width:55px; }
+  .birds.b3{ left:14vw; top:140px; width:40px; opacity:.35; }
+
+  .eyebrow{
+    font-size:13px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--rust);
+    font-weight:700;
+  }
+  h1.title{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(64px, 12vw, 148px);
+    line-height:0.95;
+    margin:6px 0 4px;
+    color:var(--brown);
+    text-shadow: 3px 3px 0 var(--butter);
+  }
+  .tagline{
+    font-size:clamp(16px, 2.4vw, 22px);
+    max-width:620px;
+    margin:10px auto 30px;
+    color:var(--brown);
+    opacity:.9;
+  }
+  .cta-row{
+    display:flex;
+    gap:16px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+  }
+  .btn{
+    font-family:var(--font-body);
+    font-weight:700;
+    font-size:15px;
+    padding:14px 30px;
+    border-radius:999px;
+    border:2px solid var(--brown);
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-block;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn-primary{
+    background:var(--rust);
+    color:var(--paper);
+    border-color:var(--rust);
+    box-shadow:4px 4px 0 var(--brown);
+  }
+  .btn-primary:hover{ transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--brown); }
+
+  .rail-wrap{
+    position:relative;
+    height:210px;
+    margin-top:40px;
+  }
+  .rail-track{
+    position:absolute;
+    bottom:36px;
+    left:0;
+    width:220%;
+    height:3px;
+    background-image:linear-gradient(90deg, var(--brown) 0 14px, transparent 14px 26px);
+    background-size:26px 3px;
+    animation:trackmove 14s linear infinite;
+  }
+  @keyframes trackmove{ from{ transform:translateX(0);} to{ transform:translateX(-50%);} }
+  .rail-scene{
+    position:absolute;
+    bottom:36px;
+    display:flex;
+    align-items:flex-end;
+    gap:14px;
+    animation:sail 22s linear infinite;
+    white-space:nowrap;
+  }
+  @keyframes sail{
+    from{ transform: translateX(110vw); }
+    to{ transform: translateX(-130vw); }
+  }
+  .boat-icon{ width:78px; flex:none; transform: translateY(-6px); }
+  .memory-card{
+    width:70px;
+    height:92px;
+    flex:none;
+    background:var(--paper);
+    border:2px solid var(--brown);
+    border-radius:6px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:var(--font-display);
+    font-size:26px;
+    color:var(--rust);
+    transform:rotate(var(--r,0deg));
+    box-shadow:2px 2px 0 var(--line);
+  }
+  .memory-card:nth-child(2){ --r:-6deg; background:var(--peach); }
+  .memory-card:nth-child(3){ --r:4deg; background:var(--mint); }
+  .memory-card:nth-child(4){ --r:-3deg; background:var(--butter); }
+  .memory-card:nth-child(5){ --r:6deg; background:var(--sky); }
+  .memory-card:nth-child(6){ --r:-5deg; background:var(--blush); }
+
+  .intro{
+    max-width:720px;
+    margin:0 auto;
+    text-align:center;
+    padding:30px 6vw 10px;
+  }
+  .intro h2{
+    font-family:var(--font-display);
+    font-size:clamp(34px,5vw,52px);
+    color:var(--brown);
+    margin:0 0 10px;
+  }
+  .intro p{
+    font-size:16px;
+    line-height:1.6;
+    color:var(--brown);
+    opacity:.85;
+  }
+
+  .form-section{
+    padding:40px 6vw 70px;
+    display:flex;
+    justify-content:center;
+  }
+  .memory-form{
+    background:var(--paper);
+    border:2px solid var(--brown);
+    border-radius:18px;
+    padding:34px clamp(20px,4vw,44px);
+    max-width:600px;
+    width:100%;
+    box-shadow:8px 8px 0 var(--peach);
+    position:relative;
+  }
+  .memory-form::before{
+    content:'';
+    position:absolute;
+    top:-14px; left:36px;
+    width:70px; height:26px;
+    background:var(--butter);
+    opacity:.85;
+    transform:rotate(-4deg);
+    border-radius:2px;
+  }
+  .memory-form h3{
+    font-family:var(--font-display);
+    font-size:30px;
+    margin:0 0 4px;
+    color:var(--brown);
+  }
+  .memory-form .sub{
+    font-size:13px;
+    color:var(--rust);
+    margin:0 0 22px;
+    font-weight:600;
+  }
+  .field{ margin-bottom:16px; }
+  .field label{
+    display:block;
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:6px;
+    color:var(--brown);
+  }
+  .field input, .field select, .field textarea{
+    width:100%;
+    font-family:var(--font-body);
+    font-size:15px;
+    padding:11px 14px;
+    border-radius:10px;
+    border:2px solid var(--line);
+    background:var(--cream);
+    color:var(--ink);
+    resize:vertical;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline:3px solid var(--sky);
+    outline-offset:1px;
+    border-color:var(--brown);
+  }
+  .row2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  @media (max-width:520px){ .row2{ grid-template-columns:1fr; } }
+  .submit-row{ display:flex; justify-content:flex-end; margin-top:6px; }
+
+  .gallery-section{
+    padding:20px 6vw 90px;
+  }
+  .gallery-head{
+    text-align:center;
+    margin-bottom:36px;
+  }
+  .gallery-head h2{
+    font-family:var(--font-display);
+    font-size:clamp(34px,5vw,52px);
+    color:var(--brown);
+    margin:0;
+  }
+  .gallery-head p{ color:var(--brown); opacity:.75; font-size:14px; margin-top:6px; }
+
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+    gap:26px;
+    max-width:1180px;
+    margin:0 auto;
+  }
+  .postcard{
+    background:var(--paper);
+    border:2px solid var(--brown);
+    border-radius:4px;
+    padding:20px 20px 18px;
+    position:relative;
+    box-shadow:5px 5px 0 var(--line);
+    opacity:0;
+    transform:translateY(16px) rotate(var(--tilt,0deg));
+    animation:reveal .5s ease forwards;
+  }
+  @keyframes reveal{ to{ opacity:1; transform:translateY(0) rotate(var(--tilt,0deg)); } }
+  .postcard:nth-child(6n+1){ --tilt:-2deg; }
+  .postcard:nth-child(6n+2){ --tilt:1.5deg; }
+  .postcard:nth-child(6n+3){ --tilt:-1deg; }
+  .postcard:nth-child(6n+4){ --tilt:2deg; }
+  .postcard:nth-child(6n+5){ --tilt:-1.5deg; }
+  .postcard:nth-child(6n+6){ --tilt:1deg; }
+
+  .tape{
+    position:absolute;
+    top:-10px; left:50%;
+    transform:translateX(-50%) rotate(-3deg);
+    width:64px; height:22px;
+    background:var(--butter);
+    opacity:.8;
+  }
+  .flavor-tag{
+    display:inline-block;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    padding:4px 10px;
+    border-radius:999px;
+    margin-bottom:10px;
+    color:var(--brown);
+  }
+  .postcard h4{
+    font-family:var(--font-display);
+    font-size:24px;
+    margin:0 0 8px;
+    color:var(--brown);
+  }
+  .postcard p{
+    font-size:14px;
+    line-height:1.55;
+    color:var(--ink);
+    margin:0 0 14px;
+  }
+  .postcard .author{
+    font-size:12px;
+    font-weight:700;
+    color:var(--rust);
+  }
+
+  .pinboard-section{
+    padding:10px 6vw 90px;
+  }
+  .pinboard-head{
+    text-align:center;
+    margin-bottom:36px;
+  }
+  .pinboard-head h2{
+    font-family:var(--font-display);
+    font-size:clamp(34px,5vw,52px);
+    color:var(--brown);
+    margin:0;
+  }
+  .pinboard-head p{ color:var(--brown); opacity:.75; font-size:14px; margin-top:6px; }
+
+  .pinboard{
+    max-width:1100px;
+    margin:0 auto;
+    background:
+      radial-gradient(circle at 20% 30%, rgba(0,0,0,0.05) 1px, transparent 1.5px) 0 0/18px 18px,
+      radial-gradient(circle at 60% 70%, rgba(0,0,0,0.04) 1px, transparent 1.5px) 0 0/22px 22px,
+      #A9754F;
+    border:10px solid #7A5236;
+    border-radius:10px;
+    box-shadow: inset 0 0 40px rgba(0,0,0,0.25), 6px 6px 0 var(--line);
+    padding:50px clamp(20px,5vw,60px);
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:44px 30px;
+  }
+  .pinned-note{
+    position:relative;
+    background:var(--butter);
+    padding:24px 20px 20px;
+    box-shadow:3px 5px 10px rgba(0,0,0,0.28);
+    transform:rotate(var(--rot,0deg));
+    font-family:var(--font-body);
+  }
+  .pinned-note:nth-child(4n+1){ background:var(--butter); --rot:-4deg; }
+  .pinned-note:nth-child(4n+2){ background:var(--peach); --rot:3deg; }
+  .pinned-note:nth-child(4n+3){ background:var(--mint); --rot:-2deg; }
+  .pinned-note:nth-child(4n+4){ background:var(--blush); --rot:4deg; }
+  .pin{
+    position:absolute;
+    top:-11px; left:50%;
+    transform:translateX(-50%);
+    width:20px; height:20px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 35%, #E5544E, #A32A26);
+    box-shadow:0 3px 4px rgba(0,0,0,0.4);
+  }
+  .pinned-note h4{
+    font-family:var(--font-display);
+    font-size:24px;
+    margin:2px 0 10px;
+    color:var(--brown);
+  }
+  .pinned-note p{
+    font-size:14.5px;
+    line-height:1.55;
+    color:var(--ink);
+    margin:0 0 14px;
+  }
+  .pinned-note .author{
+    font-size:12px;
+    font-weight:700;
+    color:var(--rust);
+    text-align:right;
+  }
+
+  footer{
+    background:var(--brown);
+    color:var(--cream);
+    text-align:center;
+    padding:36px 6vw;
+  }
+  footer .brand-name{ color:var(--cream); }
+  footer p{ font-size:13px; opacity:.75; margin-top:8px; }
+
+  :focus-visible{ outline:3px solid var(--sky); outline-offset:2px; }
+</style>
 </head>
 <body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="en"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1">&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
-<p class="p1">&lt;title&gt;memory walt — paper boat&lt;/title&gt;</p>
-<p class="p1">&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;</p>
-<p class="p1">&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;</p>
-<p class="p1">&lt;link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&amp;family=Quicksand:wght@400;500;600;700&amp;display=swap" rel="stylesheet"&gt;</p>
-<p class="p1">&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>:root{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>--cream:#FBF3E7;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>--paper:#FFFDF8;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>--ink:#4A2E1C;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>--brown:#6B4226;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>--rust:#C1602A;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>--peach:#F3C6A0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>--mint:#BFE1C4;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>--butter:#F6E2A0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>--sky:#A9D6E5;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>--blush:#F0B8C6;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>--line: rgba(74,46,28,0.16);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>--font-display:'Caveat', cursive;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>--font-body:'Quicksand', sans-serif;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>*{box-sizing:border-box;}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>html{scroll-behavior:smooth;}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>@media (prefers-reduced-motion: reduce){</p>
-<p class="p1"><span class="Apple-converted-space">    </span>html{scroll-behavior:auto;}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>*{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>body{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin:0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background:var(--cream);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color:var(--ink);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-family:var(--font-body);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>-webkit-font-smoothing:antialiased;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>overflow-x:hidden;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>a{color:inherit;}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>/* ---------- NAV ---------- */</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.nav{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display:flex;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>align-items:center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>justify-content:center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding:18px 6vw;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background:var(--paper);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-bottom:2px solid var(--line);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>position:sticky;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>top:0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>z-index:50;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>flex-wrap:wrap;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>gap:12px;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.brand{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display:flex;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>align-items:center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>gap:12px;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.brand-name{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-family:var(--font-display);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-weight:700;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size:28px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>line-height:1;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color:var(--brown);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.brand-sub{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size:11px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>letter-spacing:0.14em;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>text-transform:uppercase;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color:var(--rust);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display:block;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin-top:2px;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.nav-links{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display:flex;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>gap:8px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>flex-wrap:wrap;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.nav-links a{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>text-decoration:none;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-weight:600;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size:14px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding:9px 16px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-radius:999px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color:var(--brown);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border:2px solid transparent;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>transition:transform .15s ease, border-color .15s ease;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.nav-links a:hover{ transform:translateY(-2px); border-color:var(--line); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.nav-links a.active{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background:var(--rust);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color:var(--paper);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>/* ---------- HERO ---------- */</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.hero{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>position:relative;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding:64px 6vw 40px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>text-align:center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>overflow:hidden;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.birds{ position:absolute; top:30px; width:70px; opacity:.55; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.birds.b1{ left:4vw; top:60px; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.birds.b2{ right:6vw; top:20px; width:55px; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.birds.b3{ left:14vw; top:140px; width:40px; opacity:.35; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>.eyebrow{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size:13px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>letter-spacing:0.2em;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>text-transform:uppercase;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color:var(--rust);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-weight:700;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>h1.title{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-family:var(--font-display);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-weight:700;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size:clamp(64px, 12vw, 148px);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>line-height:0.95;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin:6px 0 4px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color:var(--brown);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>text-shadow: 3px 3px 0 var(--butter);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.tagline{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size:clamp(16px, 2.4vw, 22px);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>max-width:620px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin:10px auto 30px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color:var(--brown);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>opacity:.9;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.cta-row{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display:flex;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>gap:16px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>justify-content:center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>flex-wrap:wrap;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin-bottom:20px;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.btn{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-family:var(--font-body);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-weight:700;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size:15px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding:14px 30px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-radius:999px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border:2px solid var(--brown);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>cursor:pointer;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>text-decoration:none;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display:inline-block;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>transition:transform .15s ease, box-shadow .15s ease;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.btn-primary{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background:var(--rust);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color:var(--paper);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-color:var(--rust);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>box-shadow:4px 4px 0 var(--brown);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.btn-primary:hover{ transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--brown); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.btn-ghost{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background:transparent;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color:var(--brown);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.btn-ghost:hover{ background:var(--paper); }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>/* ---------- SIGNATURE: boat pulling memory cart ---------- */</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.rail-wrap{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>position:relative;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>height:210px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin-top:40px;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.rail-track{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>position:absolute;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>bottom:36px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>left:0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>width:220%;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>height:3px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background-image:linear-gradient(90deg, var(--brown) 0 14px, transparent 14px 26px);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background-size:26px 3px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>animation:trackmove 14s linear infinite;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>@keyframes trackmove{ from{ transform:translateX(0);} to{ transform:translateX(-50%);} }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.rail-scene{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>position:absolute;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>bottom:36px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display:flex;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>align-items:flex-end;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>gap:14px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>animation:sail 22s linear infinite;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>white-space:nowrap;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>@keyframes sail{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>from{ transform: translateX(110vw); }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>to{ transform: translateX(-130vw); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.boat-icon{ width:78px; flex:none; transform: translateY(-6px); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.memory-card{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>width:70px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>height:92px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>flex:none;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background:var(--paper);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border:2px solid var(--brown);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-radius:6px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display:flex;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>align-items:center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>justify-content:center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-family:var(--font-display);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size:26px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color:var(--rust);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>transform:rotate(var(--r,0deg));</p>
-<p class="p1"><span class="Apple-converted-space">    </span>box-shadow:2px 2px 0 var(--line);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.memory-card:nth-child(2){ --r:-6deg; background:var(--peach); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.memory-card:nth-child(3){ --r:4deg; background:var(--mint); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.memory-card:nth-child(4){ --r:-3deg; background:var(--butter); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.memory-card:nth-child(5){ --r:6deg; background:var(--sky); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.memory-card:nth-child(6){ --r:-5deg; background:var(--blush); }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>/* ---------- INTRO ---------- */</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.intro{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>max-width:720px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin:0 auto;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>text-align:center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding:30px 6vw 10px;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.intro h2{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-family:var(--font-display);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size:clamp(34px,5vw,52px);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color:var(--brown);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin:0 0 10px;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.intro p{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size:16px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>line-height:1.6;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color:var(--brown);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>opacity:.85;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>/* ---------- FORM ---------- */</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.form-section{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding:40px 6vw 70px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display:flex;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>justify-content:center;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.memory-form{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background:var(--paper);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border:2px solid var(--brown);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-radius:18px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding:34px clamp(20px,4vw,44px);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>max-width:600px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>width:100%;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>box-shadow:8px 8px 0 var(--peach);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>position:relative;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.memory-form::before{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>content:'';</p>
-<p class="p1"><span class="Apple-converted-space">    </span>position:absolute;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>top:-14px; left:36px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>width:70px; height:26px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background:var(--butter);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>opacity:.85;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>transform:rotate(-4deg);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-radius:2px;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.memory-form h3{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-family:var(--font-display);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size:30px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin:0 0 4px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color:var(--brown);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.memory-form .sub{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size:13px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color:var(--rust);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin:0 0 22px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-weight:600;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.field{ margin-bottom:16px; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.field label{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display:block;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size:13px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-weight:700;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin-bottom:6px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color:var(--brown);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.field input, .field select, .field textarea{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>width:100%;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-family:var(--font-body);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size:15px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding:11px 14px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-radius:10px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border:2px solid var(--line);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background:var(--cream);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color:var(--ink);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>resize:vertical;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.field input:focus, .field select:focus, .field textarea:focus{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>outline:3px solid var(--sky);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>outline-offset:1px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-color:var(--brown);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.row2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>@media (max-width:520px){ .row2{ grid-template-columns:1fr; } }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.submit-row{ display:flex; justify-content:flex-end; margin-top:6px; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>/* ---------- GALLERY ---------- */</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.gallery-section{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding:20px 6vw 90px;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.gallery-head{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>text-align:center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin-bottom:36px;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.gallery-head h2{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-family:var(--font-display);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size:clamp(34px,5vw,52px);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color:var(--brown);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin:0;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.gallery-head p{ color:var(--brown); opacity:.75; font-size:14px; margin-top:6px; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>.gallery-grid{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display:grid;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>grid-template-columns:repeat(auto-fill,minmax(240px,1fr));</p>
-<p class="p1"><span class="Apple-converted-space">    </span>gap:26px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>max-width:1180px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin:0 auto;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.postcard{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background:var(--paper);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border:2px solid var(--brown);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-radius:4px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding:20px 20px 18px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>position:relative;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>box-shadow:5px 5px 0 var(--line);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>opacity:0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>transform:translateY(16px) rotate(var(--tilt,0deg));</p>
-<p class="p1"><span class="Apple-converted-space">    </span>animation:reveal .5s ease forwards;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>@keyframes reveal{ to{ opacity:1; transform:translateY(0) rotate(var(--tilt,0deg)); } }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.postcard:nth-child(6n+1){ --tilt:-2deg; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.postcard:nth-child(6n+2){ --tilt:1.5deg; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.postcard:nth-child(6n+3){ --tilt:-1deg; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.postcard:nth-child(6n+4){ --tilt:2deg; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.postcard:nth-child(6n+5){ --tilt:-1.5deg; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.postcard:nth-child(6n+6){ --tilt:1deg; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>.tape{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>position:absolute;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>top:-10px; left:50%;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>transform:translateX(-50%) rotate(-3deg);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>width:64px; height:22px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background:var(--butter);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>opacity:.8;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.flavor-tag{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display:inline-block;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size:11px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-weight:700;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>letter-spacing:.04em;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>text-transform:uppercase;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding:4px 10px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-radius:999px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin-bottom:10px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color:var(--brown);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.postcard h4{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-family:var(--font-display);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size:24px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin:0 0 8px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color:var(--brown);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.postcard p{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size:14px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>line-height:1.55;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color:var(--ink);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin:0 0 14px;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.postcard .author{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size:12px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-weight:700;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color:var(--rust);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>/* ---------- PINBOARD ---------- */</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.pinboard-section{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding:10px 6vw 90px;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.pinboard-head{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>text-align:center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin-bottom:36px;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.pinboard-head h2{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-family:var(--font-display);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size:clamp(34px,5vw,52px);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color:var(--brown);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin:0;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.pinboard-head p{ color:var(--brown); opacity:.75; font-size:14px; margin-top:6px; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>.pinboard{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>max-width:1100px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin:0 auto;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background:</p>
-<p class="p1"><span class="Apple-converted-space">      </span>radial-gradient(circle at 20% 30%, rgba(0,0,0,0.05) 1px, transparent 1.5px) 0 0/18px 18px,</p>
-<p class="p1"><span class="Apple-converted-space">      </span>radial-gradient(circle at 60% 70%, rgba(0,0,0,0.04) 1px, transparent 1.5px) 0 0/22px 22px,</p>
-<p class="p1"><span class="Apple-converted-space">      </span>#A9754F;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border:10px solid #7A5236;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-radius:10px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>box-shadow: inset 0 0 40px rgba(0,0,0,0.25), 6px 6px 0 var(--line);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding:50px clamp(20px,5vw,60px);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display:grid;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>grid-template-columns:repeat(auto-fit,minmax(220px,1fr));</p>
-<p class="p1"><span class="Apple-converted-space">    </span>gap:44px 30px;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.pinned-note{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>position:relative;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background:var(--butter);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding:24px 20px 20px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>box-shadow:3px 5px 10px rgba(0,0,0,0.28);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>transform:rotate(var(--rot,0deg));</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-family:var(--font-body);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.pinned-note:nth-child(4n+1){ background:var(--butter); --rot:-4deg; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.pinned-note:nth-child(4n+2){ background:var(--peach); --rot:3deg; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.pinned-note:nth-child(4n+3){ background:var(--mint); --rot:-2deg; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.pinned-note:nth-child(4n+4){ background:var(--blush); --rot:4deg; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.pin{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>position:absolute;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>top:-11px; left:50%;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>transform:translateX(-50%);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>width:20px; height:20px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-radius:50%;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background:radial-gradient(circle at 35% 35%, #E5544E, #A32A26);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>box-shadow:0 3px 4px rgba(0,0,0,0.4);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.pinned-note h4{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-family:var(--font-display);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size:24px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin:2px 0 10px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color:var(--brown);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.pinned-note p{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size:14.5px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>line-height:1.55;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color:var(--ink);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin:0 0 14px;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.pinned-note .author{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size:12px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-weight:700;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color:var(--rust);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>text-align:right;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>/* ---------- FOOTER ---------- */</p>
-<p class="p1"><span class="Apple-converted-space">  </span>footer{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background:var(--brown);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color:var(--cream);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>text-align:center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding:36px 6vw;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>footer .brand-name{ color:var(--cream); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>footer p{ font-size:13px; opacity:.75; margin-top:8px; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>:focus-visible{ outline:3px solid var(--sky); outline-offset:2px; }</p>
-<p class="p1">&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;header class="nav"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="brand"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;svg class="boat-icon" style="width:38px" viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;path d="M10 55 L90 55 L78 78 L22 78 Z" fill="none" stroke="#4A2E1C" stroke-width="4" stroke-linejoin="round"/&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;path d="M50 55 L50 8 L78 30 Z" fill="none" stroke="#4A2E1C" stroke-width="4" stroke-linejoin="round"/&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/svg&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;span class="brand-name"&gt;paper boat&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;span class="brand-sub"&gt;drinks and memories&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/header&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;section class="hero"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg class="birds b1" viewBox="0 0 120 40"&gt;&lt;path d="M2 20 Q15 2 28 20 Q41 2 54 20" stroke="#4A2E1C" stroke-width="2.5" fill="none" stroke-linecap="round"/&gt;&lt;path d="M64 12 Q73 0 82 12 Q91 0 100 12" stroke="#4A2E1C" stroke-width="2.5" fill="none" stroke-linecap="round"/&gt;&lt;/svg&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg class="birds b2" viewBox="0 0 120 40"&gt;&lt;path d="M2 20 Q15 2 28 20 Q41 2 54 20" stroke="#4A2E1C" stroke-width="2.5" fill="none" stroke-linecap="round"/&gt;&lt;/svg&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;svg class="birds b3" viewBox="0 0 120 40"&gt;&lt;path d="M2 20 Q15 2 28 20 Q41 2 54 20" stroke="#4A2E1C" stroke-width="2.5" fill="none" stroke-linecap="round"/&gt;&lt;/svg&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;span class="eyebrow"&gt;a paper boat original&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;h1 class="title"&gt;memory walt&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;p class="tagline"&gt;every bottle we've ever made carries someone's summer, someone's grandmother's kitchen, someone's first monsoon. this is where those stories get to sail.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="cta-row"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;a href="#share" class="btn btn-primary"&gt;share your memory&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="rail-wrap" aria-hidden="true"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="rail-track"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="rail-scene"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;svg class="boat-icon" viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;path d="M10 55 L90 55 L78 78 L22 78 Z" fill="#F3C6A0" stroke="#4A2E1C" stroke-width="4" stroke-linejoin="round"/&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;path d="M50 55 L50 8 L78 30 Z" fill="#FFFDF8" stroke="#4A2E1C" stroke-width="4" stroke-linejoin="round"/&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/svg&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="memory-card"&gt;'96&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="memory-card"&gt;amma&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="memory-card"&gt;rain&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="memory-card"&gt;bus stop&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="memory-card"&gt;first job&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="memory-card"&gt;home&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/section&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;section class="intro"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;h2&gt;we made the drink. you made the memory.&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;p&gt;drop the small, specific moment a flavour brings back — the taste doesn't have to be ours, but chances are, it is. we'll pin it up here for everyone else who tastes the same thing.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/section&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;section class="form-section" id="share"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;form class="memory-form" id="memoryForm"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h3&gt;tell us where it takes you&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p class="sub"&gt;takes about a minute to write, a lifetime to have lived&lt;/p&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="row2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="field"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;label for="name"&gt;your name&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;input id="name" type="text" placeholder="what should we call you?" required&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="field"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;label for="flavor"&gt;the flavour that started it&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;select id="flavor" required&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value="" disabled selected&gt;pick one&lt;/option&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;option&gt;aamras&lt;/option&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;option&gt;jaljeera&lt;/option&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;option&gt;kokum&lt;/option&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;option&gt;coconut water&lt;/option&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;option&gt;jamun&lt;/option&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;option&gt;santra&lt;/option&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;option&gt;golgappa water&lt;/option&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;option&gt;other / a food memory&lt;/option&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/select&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="field"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;label for="title"&gt;give the memory a title&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input id="title" type="text" placeholder="e.g. summers at nani's house" required&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="field"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;label for="story"&gt;your memory&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;textarea id="story" rows="4" placeholder="write it the way you'd tell it to a friend..." required&gt;&lt;/textarea&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="submit-row"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button type="submit" class="btn btn-primary"&gt;pin it to the wall&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/form&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/section&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;section class="gallery-section" id="memories"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="gallery-head"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h2&gt;the memory wall&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p&gt;every card here was written by someone who tasted their own childhood again&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="gallery-grid" id="galleryGrid"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/section&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;section class="pinboard-section"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="pinboard-head"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h2&gt;pinned to the board&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p&gt;a few short ones, straight from the corkboard by the door&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="pinboard"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="pinned-note"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="pin"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;h4&gt;Dadi's Sunday jar&lt;/h4&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;every sunday she'd open the same steel jar of imli candy and let me pick two, never three. i still hear the lid pop before i taste anything.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="author"&gt;— Naina, 24&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="pinned-note"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="pin"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;h4&gt;the shared rickshaw&lt;/h4&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;five of us squeezed into one rickshaw home from school, splitting a single orange candy five ways. somehow it always tasted like enough.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="author"&gt;— Yusuf, 31&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="pinned-note"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="pin"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;h4&gt;power cuts and kokum&lt;/h4&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;the lights would go out every evening at 7, and my mother would hand out kokum sherbet in the dark like it was a small apology from the world.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="author"&gt;— Latika, 27&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="pinned-note"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="pin"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;h4&gt;the last day of school&lt;/h4&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;we'd all chip in for one big bottle of nimbu pani and pass it around the classroom. nobody cared about germs. everybody cared about that bottle.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="author"&gt;— Arjun, 29&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/section&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;footer&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;span class="brand-name"&gt;paper boat&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;p&gt;drinks and memories · memory walt is where the second half of that name lives&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/footer&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const tagColors = ['var(--peach)','var(--mint)','var(--butter)','var(--sky)','var(--blush)'];</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>const seedMemories = [</p>
-<p class="p1"><span class="Apple-converted-space">    </span>{ name:'Riya', flavor:'aamras', title:'the terrace afternoons', story:'nani would slice mangoes on the terrace while the ceiling fan wasn\\'t invented yet — just her, a hand fan, and a steel glass of aamras.', },</p>
-<p class="p1"><span class="Apple-converted-space">    </span>{ name:'Karan', flavor:'jaljeera', title:'the cricket ground stall', story:'one rupee coin, a tiny thela outside the ground, and the sourest jaljeera that ever hit a ten-year-old\\'s tongue after a six.', },</p>
-<p class="p1"><span class="Apple-converted-space">    </span>{ name:'Meher', flavor:'kokum', title:'monsoon at the window', story:'grandmother\\'s kokum sherbet always appeared right when the first thunder rolled in, like she could smell rain before it fell.', },</p>
-<p class="p1"><span class="Apple-converted-space">    </span>{ name:'Aarav', flavor:'coconut water', title:'the beach shack uncle', story:'he\\'d chop the top off with one swing of his knife and hand it over before you even finished asking. never spilled a drop.', },</p>
-<p class="p1"><span class="Apple-converted-space">    </span>{ name:'Simran', flavor:'jamun', title:'purple tongues, july', story:'we\\'d climb the neighbour\\'s tree for jamuns and come home with tongues so purple our mothers thought we\\'d eaten ink.', },</p>
-<p class="p1"><span class="Apple-converted-space">    </span>{ name:'Devika', flavor:'santra', title:'winter sun, terrace floor', story:'peeling santras on the terrace floor in december sun is the closest i\\'ve come to doing absolutely nothing and loving it.', },</p>
-<p class="p1"><span class="Apple-converted-space">    </span>{ name:'Rohan', flavor:'golgappa water', title:'tuesday tuition breaks', story:'my tuition teacher lived above a golgappa stall. i learnt more about pani puri timing than trigonometry, honestly.', },</p>
-<p class="p1"><span class="Apple-converted-space">    </span>{ name:'Ananya', flavor:'kokum', title:'my father\\'s one recipe', story:'dad can\\'t cook a single thing, but he makes kokum sherbet every summer like it\\'s the family secret he was finally trusted with.', },</p>
-<p class="p1"><span class="Apple-converted-space">    </span>{ name:'Farhan', flavor:'jaljeera', title:'the long train platforms', story:'every railway platform between nagpur and delhi has a jaljeera guy shouting the same tune. i still hum it without meaning to.', },</p>
-<p class="p1"><span class="Apple-converted-space">    </span>{ name:'Ishita', flavor:'aamras', title:'the fight over the last bowl', story:'three sisters, one steel bowl of aamras, and a rule that whoever finished homework first got the last pour. i never won.', },</p>
-<p class="p1"><span class="Apple-converted-space">    </span>{ name:'Vikram', flavor:'coconut water', title:'the exam-day ritual', story:'amma made me drink a whole coconut before every board exam. i still can\\'t walk into an exam hall without craving one.', },</p>
-<p class="p1"><span class="Apple-converted-space">    </span>{ name:'Priya', flavor:'other / a food memory', title:'my grandfather\\'s thermos', story:'he carried the same steel thermos to the park every evening. i never knew what was in it — turns out it was just filter coffee and love.', },</p>
-<p class="p1"><span class="Apple-converted-space">  </span>];</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>const grid = document.getElementById('galleryGrid');</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>function makeCard(m){</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const color = tagColors[Math.floor(Math.random()*tagColors.length)];</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const card = document.createElement('article');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>card.className = 'postcard';</p>
-<p class="p1"><span class="Apple-converted-space">    </span>card.innerHTML = `</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="tape"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;span class="flavor-tag" style="background:${color}"&gt;${m.flavor}&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h4&gt;${m.title}&lt;/h4&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p&gt;${m.story}&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="author"&gt;— ${m.name}&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>`;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>return card;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>seedMemories.forEach(m =&gt; grid.appendChild(makeCard(m)));</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>const form = document.getElementById('memoryForm');</p>
-<p class="p1"><span class="Apple-converted-space">  </span>form.addEventListener('submit', function(e){</p>
-<p class="p1"><span class="Apple-converted-space">    </span>e.preventDefault();</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const m = {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>name: document.getElementById('name').value.trim() || 'anonymous sailor',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>flavor: document.getElementById('flavor').value,</p>
-<p class="p1"><span class="Apple-converted-space">      </span>title: document.getElementById('title').value.trim(),</p>
-<p class="p1"><span class="Apple-converted-space">      </span>story: document.getElementById('story').value.trim()</p>
-<p class="p1"><span class="Apple-converted-space">    </span>};</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const card = makeCard(m);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>grid.insertBefore(card, grid.firstChild);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>form.reset();</p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('memories').scrollIntoView({behavior:'smooth', block:'start'});</p>
-<p class="p1"><span class="Apple-converted-space">  </span>});</p>
-<p class="p1">&lt;/script&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+
+  <header class="nav">
+    <div class="brand">
+      <svg class="boat-icon" style="width:38px" viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 55 L90 55 L78 78 L22 78 Z" fill="none" stroke="#4A2E1C" stroke-width="4" stroke-linejoin="round"/>
+        <path d="M50 55 L50 8 L78 30 Z" fill="none" stroke="#4A2E1C" stroke-width="4" stroke-linejoin="round"/>
+      </svg>
+      <div>
+        <span class="brand-name">paper boat</span>
+        <span class="brand-sub">drinks and memories</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <svg class="birds b1" viewBox="0 0 120 40"><path d="M2 20 Q15 2 28 20 Q41 2 54 20" stroke="#4A2E1C" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M64 12 Q73 0 82 12 Q91 0 100 12" stroke="#4A2E1C" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+    <svg class="birds b2" viewBox="0 0 120 40"><path d="M2 20 Q15 2 28 20 Q41 2 54 20" stroke="#4A2E1C" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+    <svg class="birds b3" viewBox="0 0 120 40"><path d="M2 20 Q15 2 28 20 Q41 2 54 20" stroke="#4A2E1C" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+
+    <span class="eyebrow">a paper boat original</span>
+    <h1 class="title">memory walt</h1>
+    <p class="tagline">every bottle we've ever made carries someone's summer, someone's grandmother's kitchen, someone's first monsoon. this is where those stories get to sail.</p>
+    <div class="cta-row">
+      <a href="#share" class="btn btn-primary">share your memory</a>
+    </div>
+
+    <div class="rail-wrap" aria-hidden="true">
+      <div class="rail-track"></div>
+      <div class="rail-scene">
+        <svg class="boat-icon" viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 55 L90 55 L78 78 L22 78 Z" fill="#F3C6A0" stroke="#4A2E1C" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M50 55 L50 8 L78 30 Z" fill="#FFFDF8" stroke="#4A2E1C" stroke-width="4" stroke-linejoin="round"/>
+        </svg>
+        <div class="memory-card">'96</div>
+        <div class="memory-card">amma</div>
+        <div class="memory-card">rain</div>
+        <div class="memory-card">bus stop</div>
+        <div class="memory-card">first job</div>
+        <div class="memory-card">home</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="intro">
+    <h2>we made the drink. you made the memory.</h2>
+    <p>drop the small, specific moment a flavour brings back — the taste doesn't have to be ours, but chances are, it is. we'll pin it up here for everyone else who tastes the same thing.</p>
+  </section>
+
+  <section class="form-section" id="share">
+    <form class="memory-form" id="memoryForm">
+      <h3>tell us where it takes you</h3>
+      <p class="sub">takes about a minute to write, a lifetime to have lived</p>
+
+      <div class="row2">
+        <div class="field">
+          <label for="name">your name</label>
+          <input id="name" type="text" placeholder="what should we call you?" required>
+        </div>
+        <div class="field">
+          <label for="flavor">the flavour that started it</label>
+          <select id="flavor" required>
+            <option value="" disabled selected>pick one</option>
+            <option>aamras</option>
+            <option>jaljeera</option>
+            <option>kokum</option>
+            <option>coconut water</option>
+            <option>jamun</option>
+            <option>santra</option>
+            <option>golgappa water</option>
+            <option>other / a food memory</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="title">give the memory a title</label>
+        <input id="title" type="text" placeholder="e.g. summers at nani's house" required>
+      </div>
+
+      <div class="field">
+        <label for="story">your memory</label>
+        <textarea id="story" rows="4" placeholder="write it the way you'd tell it to a friend..." required></textarea>
+      </div>
+
+      <div class="submit-row">
+        <button type="submit" class="btn btn-primary">pin it to the wall</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="gallery-section" id="memories">
+    <div class="gallery-head">
+      <h2>the memory wall</h2>
+      <p>every card here was written by someone who tasted their own childhood again</p>
+    </div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </section>
+
+  <section class="pinboard-section">
+    <div class="pinboard-head">
+      <h2>pinned to the board</h2>
+      <p>a few short ones, straight from the corkboard by the door</p>
+    </div>
+    <div class="pinboard">
+      <div class="pinned-note">
+        <div class="pin"></div>
+        <h4>Dadi's Sunday jar</h4>
+        <p>every sunday she'd open the same steel jar of imli candy and let me pick two, never three. i still hear the lid pop before i taste anything.</p>
+        <div class="author">— Naina, 24</div>
+      </div>
+      <div class="pinned-note">
+        <div class="pin"></div>
+        <h4>the shared rickshaw</h4>
+        <p>five of us squeezed into one rickshaw home from school, splitting a single orange candy five ways. somehow it always tasted like enough.</p>
+        <div class="author">— Yusuf, 31</div>
+      </div>
+      <div class="pinned-note">
+        <div class="pin"></div>
+        <h4>power cuts and kokum</h4>
+        <p>the lights would go out every evening at 7, and my mother would hand out kokum sherbet in the dark like it was a small apology from the world.</p>
+        <div class="author">— Latika, 27</div>
+      </div>
+      <div class="pinned-note">
+        <div class="pin"></div>
+        <h4>the last day of school</h4>
+        <p>we'd all chip in for one big bottle of nimbu pani and pass it around the classroom. nobody cared about germs. everybody cared about that bottle.</p>
+        <div class="author">— Arjun, 29</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="brand-name">paper boat</span>
+    <p>drinks and memories · memory walt is where the second half of that name lives</p>
+  </footer>
+
+<script>
+  const tagColors = ['var(--peach)','var(--mint)','var(--butter)','var(--sky)','var(--blush)'];
+
+  const seedMemories = [
+    { name:'Riya', flavor:'aamras', title:'the terrace afternoons', story:"nani would slice mangoes on the terrace while the ceiling fan wasn't invented yet — just her, a hand fan, and a steel glass of aamras." },
+    { name:'Karan', flavor:'jaljeera', title:'the cricket ground stall', story:"one rupee coin, a tiny thela outside the ground, and the sourest jaljeera that ever hit a ten-year-old's tongue after a six." },
+    { name:'Meher', flavor:'kokum', title:'monsoon at the window', story:"grandmother's kokum sherbet always appeared right when the first thunder rolled in, like she could smell rain before it fell." },
+    { name:'Aarav', flavor:'coconut water', title:'the beach shack uncle', story:"he'd chop the top off with one swing of his knife and hand it over before you even finished asking. never spilled a drop." },
+    { name:'Simran', flavor:'jamun', title:'purple tongues, july', story:"we'd climb the neighbour's tree for jamuns and come home with tongues so purple our mothers thought we'd eaten ink." },
+    { name:'Devika', flavor:'santra', title:'winter sun, terrace floor', story:"peeling santras on the terrace floor in december sun is the closest i've come to doing absolutely nothing and loving it." },
+    { name:'Rohan', flavor:'golgappa water', title:'tuesday tuition breaks', story:"my tuition teacher lived above a golgappa stall. i learnt more about pani puri timing than trigonometry, honestly." },
+    { name:'Ananya', flavor:'kokum', title:'my father\'s one recipe', story:"dad can't cook a single thing, but he makes kokum sherbet every summer like it's the family secret he was finally trusted with." },
+    { name:'Farhan', flavor:'jaljeera', title:'the long train platforms', story:"every railway platform between nagpur and delhi has a jaljeera guy shouting the same tune. i still hum it without meaning to." },
+    { name:'Ishita', flavor:'aamras', title:'the fight over the last bowl', story:"three sisters, one steel bowl of aamras, and a rule that whoever finished homework first got the last pour. i never won." },
+    { name:'Vikram', flavor:'coconut water', title:'the exam-day ritual', story:"amma made me drink a whole coconut before every board exam. i still can't walk into an exam hall without craving one." },
+    { name:'Priya', flavor:'other / a food memory', title:'my grandfather\'s thermos', story:"he carried the same steel thermos to the park every evening. i never knew what was in it — turns out it was just filter coffee and love." },
+  ];
+
+  const grid = document.getElementById('galleryGrid');
+
+  function makeCard(m){
+    const color = tagColors[Math.floor(Math.random()*tagColors.length)];
+    const card = document.createElement('article');
+    card.className = 'postcard';
+    card.innerHTML = `
+      <div class="tape"></div>
+      <span class="flavor-tag" style="background:${color}">${m.flavor}</span>
+      <h4>${m.title}</h4>
+      <p>${m.story}</p>
+      <div class="author">— ${m.name}</div>
+    `;
+    return card;
+  }
+
+  seedMemories.forEach(m => grid.appendChild(makeCard(m)));
+
+  const form = document.getElementById('memoryForm');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    const m = {
+      name: document.getElementById('name').value.trim() || 'anonymous sailor',
+      flavor: document.getElementById('flavor').value,
+      title: document.getElementById('title').value.trim(),
+      story: document.getElementById('story').value.trim()
+    };
+    const card = makeCard(m);
+    grid.insertBefore(card, grid.firstChild);
+    form.reset();
+    document.getElementById('memories').scrollIntoView({behavior:'smooth', block:'start'});
+  });
+</script>
 </body>
 </html>
