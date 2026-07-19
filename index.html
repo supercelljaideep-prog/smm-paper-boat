@@ -23,14 +23,12 @@
     --font-display:'Caveat', cursive;
     --font-body:'Quicksand', sans-serif;
   }
-
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
     *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
   }
-
   body{
     margin:0;
     background:var(--cream);
@@ -39,10 +37,7 @@
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
   }
-
   a{color:inherit;}
-
-  /* ---------- NAV ---------- */
   .nav{
     display:flex;
     align-items:center;
@@ -56,66 +51,15 @@
     flex-wrap:wrap;
     gap:12px;
   }
-  .brand{
-    display:flex;
-    align-items:center;
-    gap:12px;
-  }
-  .brand-name{
-    font-family:var(--font-display);
-    font-weight:700;
-    font-size:28px;
-    line-height:1;
-    color:var(--brown);
-  }
-  .brand-sub{
-    font-size:11px;
-    letter-spacing:0.14em;
-    text-transform:uppercase;
-    color:var(--rust);
-    display:block;
-    margin-top:2px;
-  }
-  .nav-links{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
-  }
-  .nav-links a{
-    text-decoration:none;
-    font-weight:600;
-    font-size:14px;
-    padding:9px 16px;
-    border-radius:999px;
-    color:var(--brown);
-    border:2px solid transparent;
-    transition:transform .15s ease, border-color .15s ease;
-  }
-  .nav-links a:hover{ transform:translateY(-2px); border-color:var(--line); }
-  .nav-links a.active{
-    background:var(--rust);
-    color:var(--paper);
-  }
-
-  /* ---------- HERO ---------- */
-  .hero{
-    position:relative;
-    padding:64px 6vw 40px;
-    text-align:center;
-    overflow:hidden;
-  }
+  .brand{ display:flex; align-items:center; gap:12px; }
+  .brand-name{ font-family:var(--font-display); font-weight:700; font-size:28px; line-height:1; color:var(--brown); }
+  .brand-sub{ font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--rust); display:block; margin-top:2px; }
+  .hero{ position:relative; padding:64px 6vw 40px; text-align:center; overflow:hidden; }
   .birds{ position:absolute; top:30px; width:70px; opacity:.55; }
   .birds.b1{ left:4vw; top:60px; }
   .birds.b2{ right:6vw; top:20px; width:55px; }
   .birds.b3{ left:14vw; top:140px; width:40px; opacity:.35; }
-
-  .eyebrow{
-    font-size:13px;
-    letter-spacing:0.2em;
-    text-transform:uppercase;
-    color:var(--rust);
-    font-weight:700;
-  }
+  .eyebrow{ font-size:13px; letter-spacing:0.2em; text-transform:uppercase; color:var(--rust); font-weight:700; }
   h1.title{
     font-family:var(--font-display);
     font-weight:700;
@@ -125,20 +69,8 @@
     color:var(--brown);
     text-shadow: 3px 3px 0 var(--butter);
   }
-  .tagline{
-    font-size:clamp(16px, 2.4vw, 22px);
-    max-width:620px;
-    margin:10px auto 30px;
-    color:var(--brown);
-    opacity:.9;
-  }
-  .cta-row{
-    display:flex;
-    gap:16px;
-    justify-content:center;
-    flex-wrap:wrap;
-    margin-bottom:20px;
-  }
+  .tagline{ font-size:clamp(16px, 2.4vw, 22px); max-width:620px; margin:10px auto 30px; color:var(--brown); opacity:.9; }
+  .cta-row{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:20px; }
   .btn{
     font-family:var(--font-body);
     font-weight:700;
@@ -151,191 +83,69 @@
     display:inline-block;
     transition:transform .15s ease, box-shadow .15s ease;
   }
-  .btn-primary{
-    background:var(--rust);
-    color:var(--paper);
-    border-color:var(--rust);
-    box-shadow:4px 4px 0 var(--brown);
-  }
+  .btn-primary{ background:var(--rust); color:var(--paper); border-color:var(--rust); box-shadow:4px 4px 0 var(--brown); }
   .btn-primary:hover{ transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--brown); }
-  .btn-ghost{
-    background:transparent;
-    color:var(--brown);
-  }
-  .btn-ghost:hover{ background:var(--paper); }
-
-  /* ---------- SIGNATURE: boat pulling memory cart ---------- */
-  .rail-wrap{
-    position:relative;
-    height:210px;
-    margin-top:40px;
-  }
+  .rail-wrap{ position:relative; height:210px; margin-top:40px; }
   .rail-track{
-    position:absolute;
-    bottom:36px;
-    left:0;
-    width:220%;
-    height:3px;
+    position:absolute; bottom:36px; left:0; width:220%; height:3px;
     background-image:linear-gradient(90deg, var(--brown) 0 14px, transparent 14px 26px);
     background-size:26px 3px;
     animation:trackmove 14s linear infinite;
   }
   @keyframes trackmove{ from{ transform:translateX(0);} to{ transform:translateX(-50%);} }
   .rail-scene{
-    position:absolute;
-    bottom:36px;
-    display:flex;
-    align-items:flex-end;
-    gap:14px;
-    animation:sail 22s linear infinite;
-    white-space:nowrap;
+    position:absolute; bottom:36px; display:flex; align-items:flex-end; gap:14px;
+    animation:sail 22s linear infinite; white-space:nowrap;
   }
-  @keyframes sail{
-    from{ transform: translateX(110vw); }
-    to{ transform: translateX(-130vw); }
-  }
+  @keyframes sail{ from{ transform: translateX(110vw); } to{ transform: translateX(-130vw); } }
   .boat-icon{ width:78px; flex:none; transform: translateY(-6px); }
   .memory-card{
-    width:70px;
-    height:92px;
-    flex:none;
-    background:var(--paper);
-    border:2px solid var(--brown);
-    border-radius:6px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-family:var(--font-display);
-    font-size:26px;
-    color:var(--rust);
-    transform:rotate(var(--r,0deg));
-    box-shadow:2px 2px 0 var(--line);
+    width:70px; height:92px; flex:none; background:var(--paper); border:2px solid var(--brown);
+    border-radius:6px; display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-display); font-size:26px; color:var(--rust);
+    transform:rotate(var(--r,0deg)); box-shadow:2px 2px 0 var(--line);
   }
   .memory-card:nth-child(2){ --r:-6deg; background:var(--peach); }
   .memory-card:nth-child(3){ --r:4deg; background:var(--mint); }
   .memory-card:nth-child(4){ --r:-3deg; background:var(--butter); }
   .memory-card:nth-child(5){ --r:6deg; background:var(--sky); }
   .memory-card:nth-child(6){ --r:-5deg; background:var(--blush); }
-
-  /* ---------- INTRO ---------- */
-  .intro{
-    max-width:720px;
-    margin:0 auto;
-    text-align:center;
-    padding:30px 6vw 10px;
-  }
-  .intro h2{
-    font-family:var(--font-display);
-    font-size:clamp(34px,5vw,52px);
-    color:var(--brown);
-    margin:0 0 10px;
-  }
-  .intro p{
-    font-size:16px;
-    line-height:1.6;
-    color:var(--brown);
-    opacity:.85;
-  }
-
-  /* ---------- FORM ---------- */
-  .form-section{
-    padding:40px 6vw 70px;
-    display:flex;
-    justify-content:center;
-  }
+  .intro{ max-width:720px; margin:0 auto; text-align:center; padding:30px 6vw 10px; }
+  .intro h2{ font-family:var(--font-display); font-size:clamp(34px,5vw,52px); color:var(--brown); margin:0 0 10px; }
+  .intro p{ font-size:16px; line-height:1.6; color:var(--brown); opacity:.85; }
+  .form-section{ padding:40px 6vw 70px; display:flex; justify-content:center; }
   .memory-form{
-    background:var(--paper);
-    border:2px solid var(--brown);
-    border-radius:18px;
-    padding:34px clamp(20px,4vw,44px);
-    max-width:600px;
-    width:100%;
-    box-shadow:8px 8px 0 var(--peach);
-    position:relative;
+    background:var(--paper); border:2px solid var(--brown); border-radius:18px;
+    padding:34px clamp(20px,4vw,44px); max-width:600px; width:100%;
+    box-shadow:8px 8px 0 var(--peach); position:relative;
   }
   .memory-form::before{
-    content:'';
-    position:absolute;
-    top:-14px; left:36px;
-    width:70px; height:26px;
-    background:var(--butter);
-    opacity:.85;
-    transform:rotate(-4deg);
-    border-radius:2px;
+    content:''; position:absolute; top:-14px; left:36px; width:70px; height:26px;
+    background:var(--butter); opacity:.85; transform:rotate(-4deg); border-radius:2px;
   }
-  .memory-form h3{
-    font-family:var(--font-display);
-    font-size:30px;
-    margin:0 0 4px;
-    color:var(--brown);
-  }
-  .memory-form .sub{
-    font-size:13px;
-    color:var(--rust);
-    margin:0 0 22px;
-    font-weight:600;
-  }
+  .memory-form h3{ font-family:var(--font-display); font-size:30px; margin:0 0 4px; color:var(--brown); }
+  .memory-form .sub{ font-size:13px; color:var(--rust); margin:0 0 22px; font-weight:600; }
   .field{ margin-bottom:16px; }
-  .field label{
-    display:block;
-    font-size:13px;
-    font-weight:700;
-    margin-bottom:6px;
-    color:var(--brown);
-  }
+  .field label{ display:block; font-size:13px; font-weight:700; margin-bottom:6px; color:var(--brown); }
   .field input, .field select, .field textarea{
-    width:100%;
-    font-family:var(--font-body);
-    font-size:15px;
-    padding:11px 14px;
-    border-radius:10px;
-    border:2px solid var(--line);
-    background:var(--cream);
-    color:var(--ink);
-    resize:vertical;
+    width:100%; font-family:var(--font-body); font-size:15px; padding:11px 14px;
+    border-radius:10px; border:2px solid var(--line); background:var(--cream); color:var(--ink); resize:vertical;
   }
   .field input:focus, .field select:focus, .field textarea:focus{
-    outline:3px solid var(--sky);
-    outline-offset:1px;
-    border-color:var(--brown);
+    outline:3px solid var(--sky); outline-offset:1px; border-color:var(--brown);
   }
   .row2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
   @media (max-width:520px){ .row2{ grid-template-columns:1fr; } }
   .submit-row{ display:flex; justify-content:flex-end; margin-top:6px; }
-
-  /* ---------- GALLERY ---------- */
-  .gallery-section{
-    padding:20px 6vw 90px;
-  }
-  .gallery-head{
-    text-align:center;
-    margin-bottom:36px;
-  }
-  .gallery-head h2{
-    font-family:var(--font-display);
-    font-size:clamp(34px,5vw,52px);
-    color:var(--brown);
-    margin:0;
-  }
+  .gallery-section{ padding:20px 6vw 90px; }
+  .gallery-head{ text-align:center; margin-bottom:36px; }
+  .gallery-head h2{ font-family:var(--font-display); font-size:clamp(34px,5vw,52px); color:var(--brown); margin:0; }
   .gallery-head p{ color:var(--brown); opacity:.75; font-size:14px; margin-top:6px; }
-
-  .gallery-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
-    gap:26px;
-    max-width:1180px;
-    margin:0 auto;
-  }
+  .gallery-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:26px; max-width:1180px; margin:0 auto; }
   .postcard{
-    background:var(--paper);
-    border:2px solid var(--brown);
-    border-radius:4px;
-    padding:20px 20px 18px;
-    position:relative;
-    box-shadow:5px 5px 0 var(--line);
-    opacity:0;
-    transform:translateY(16px) rotate(var(--tilt,0deg));
-    animation:reveal .5s ease forwards;
+    background:var(--paper); border:2px solid var(--brown); border-radius:4px;
+    padding:20px 20px 18px; position:relative; box-shadow:5px 5px 0 var(--line);
+    opacity:0; transform:translateY(16px) rotate(var(--tilt,0deg)); animation:reveal .5s ease forwards;
   }
   @keyframes reveal{ to{ opacity:1; transform:translateY(0) rotate(var(--tilt,0deg)); } }
   .postcard:nth-child(6n+1){ --tilt:-2deg; }
@@ -344,125 +154,47 @@
   .postcard:nth-child(6n+4){ --tilt:2deg; }
   .postcard:nth-child(6n+5){ --tilt:-1.5deg; }
   .postcard:nth-child(6n+6){ --tilt:1deg; }
-
-  .tape{
-    position:absolute;
-    top:-10px; left:50%;
-    transform:translateX(-50%) rotate(-3deg);
-    width:64px; height:22px;
-    background:var(--butter);
-    opacity:.8;
-  }
+  .tape{ position:absolute; top:-10px; left:50%; transform:translateX(-50%) rotate(-3deg); width:64px; height:22px; background:var(--butter); opacity:.8; }
   .flavor-tag{
-    display:inline-block;
-    font-size:11px;
-    font-weight:700;
-    letter-spacing:.04em;
-    text-transform:uppercase;
-    padding:4px 10px;
-    border-radius:999px;
-    margin-bottom:10px;
-    color:var(--brown);
+    display:inline-block; font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
+    padding:4px 10px; border-radius:999px; margin-bottom:10px; color:var(--brown);
   }
-  .postcard h4{
-    font-family:var(--font-display);
-    font-size:24px;
-    margin:0 0 8px;
-    color:var(--brown);
-  }
-  .postcard p{
-    font-size:14px;
-    line-height:1.55;
-    color:var(--ink);
-    margin:0 0 14px;
-  }
-  .postcard .author{
-    font-size:12px;
-    font-weight:700;
-    color:var(--rust);
-  }
-
-  /* ---------- PINBOARD ---------- */
-  .pinboard-section{
-    padding:10px 6vw 90px;
-  }
-  .pinboard-head{
-    text-align:center;
-    margin-bottom:36px;
-  }
-  .pinboard-head h2{
-    font-family:var(--font-display);
-    font-size:clamp(34px,5vw,52px);
-    color:var(--brown);
-    margin:0;
-  }
+  .postcard h4{ font-family:var(--font-display); font-size:24px; margin:0 0 8px; color:var(--brown); }
+  .postcard p{ font-size:14px; line-height:1.55; color:var(--ink); margin:0 0 14px; }
+  .postcard .author{ font-size:12px; font-weight:700; color:var(--rust); }
+  .pinboard-section{ padding:10px 6vw 90px; }
+  .pinboard-head{ text-align:center; margin-bottom:36px; }
+  .pinboard-head h2{ font-family:var(--font-display); font-size:clamp(34px,5vw,52px); color:var(--brown); margin:0; }
   .pinboard-head p{ color:var(--brown); opacity:.75; font-size:14px; margin-top:6px; }
-
   .pinboard{
-    max-width:1100px;
-    margin:0 auto;
+    max-width:1100px; margin:0 auto;
     background:
       radial-gradient(circle at 20% 30%, rgba(0,0,0,0.05) 1px, transparent 1.5px) 0 0/18px 18px,
       radial-gradient(circle at 60% 70%, rgba(0,0,0,0.04) 1px, transparent 1.5px) 0 0/22px 22px,
       #A9754F;
-    border:10px solid #7A5236;
-    border-radius:10px;
+    border:10px solid #7A5236; border-radius:10px;
     box-shadow: inset 0 0 40px rgba(0,0,0,0.25), 6px 6px 0 var(--line);
     padding:50px clamp(20px,5vw,60px);
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:44px 30px;
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:44px 30px;
   }
   .pinned-note{
-    position:relative;
-    background:var(--butter);
-    padding:24px 20px 20px;
-    box-shadow:3px 5px 10px rgba(0,0,0,0.28);
-    transform:rotate(var(--rot,0deg));
-    font-family:var(--font-body);
+    position:relative; background:var(--butter); padding:24px 20px 20px;
+    box-shadow:3px 5px 10px rgba(0,0,0,0.28); transform:rotate(var(--rot,0deg)); font-family:var(--font-body);
   }
   .pinned-note:nth-child(4n+1){ background:var(--butter); --rot:-4deg; }
   .pinned-note:nth-child(4n+2){ background:var(--peach); --rot:3deg; }
   .pinned-note:nth-child(4n+3){ background:var(--mint); --rot:-2deg; }
   .pinned-note:nth-child(4n+4){ background:var(--blush); --rot:4deg; }
   .pin{
-    position:absolute;
-    top:-11px; left:50%;
-    transform:translateX(-50%);
-    width:20px; height:20px;
-    border-radius:50%;
-    background:radial-gradient(circle at 35% 35%, #E5544E, #A32A26);
-    box-shadow:0 3px 4px rgba(0,0,0,0.4);
+    position:absolute; top:-11px; left:50%; transform:translateX(-50%); width:20px; height:20px;
+    border-radius:50%; background:radial-gradient(circle at 35% 35%, #E5544E, #A32A26); box-shadow:0 3px 4px rgba(0,0,0,0.4);
   }
-  .pinned-note h4{
-    font-family:var(--font-display);
-    font-size:24px;
-    margin:2px 0 10px;
-    color:var(--brown);
-  }
-  .pinned-note p{
-    font-size:14.5px;
-    line-height:1.55;
-    color:var(--ink);
-    margin:0 0 14px;
-  }
-  .pinned-note .author{
-    font-size:12px;
-    font-weight:700;
-    color:var(--rust);
-    text-align:right;
-  }
-
-  /* ---------- FOOTER ---------- */
-  footer{
-    background:var(--brown);
-    color:var(--cream);
-    text-align:center;
-    padding:36px 6vw;
-  }
+  .pinned-note h4{ font-family:var(--font-display); font-size:24px; margin:2px 0 10px; color:var(--brown); }
+  .pinned-note p{ font-size:14.5px; line-height:1.55; color:var(--ink); margin:0 0 14px; }
+  .pinned-note .author{ font-size:12px; font-weight:700; color:var(--rust); text-align:right; }
+  footer{ background:var(--brown); color:var(--cream); text-align:center; padding:36px 6vw; }
   footer .brand-name{ color:var(--cream); }
   footer p{ font-size:13px; opacity:.75; margin-top:8px; }
-
   :focus-visible{ outline:3px solid var(--sky); outline-offset:2px; }
 </style>
 </head>
@@ -600,25 +332,25 @@
 
   <footer>
     <span class="brand-name">paper boat</span>
-    <p>drinks and memories · memory walt is where the second half of that name lives</p>
+    <p>drinks and memories · memory vault is where the second half of that name lives</p>
   </footer>
 
 <script>
   const tagColors = ['var(--peach)','var(--mint)','var(--butter)','var(--sky)','var(--blush)'];
 
   const seedMemories = [
-    { name:'Riya', flavor:'aamras', title:'the terrace afternoons', story:'nani would slice mangoes on the terrace while the ceiling fan wasn\\'t invented yet — just her, a hand fan, and a steel glass of aamras.', },
-    { name:'Karan', flavor:'jaljeera', title:'the cricket ground stall', story:'one rupee coin, a tiny thela outside the ground, and the sourest jaljeera that ever hit a ten-year-old\\'s tongue after a six.', },
-    { name:'Meher', flavor:'kokum', title:'monsoon at the window', story:'grandmother\\'s kokum sherbet always appeared right when the first thunder rolled in, like she could smell rain before it fell.', },
-    { name:'Aarav', flavor:'coconut water', title:'the beach shack uncle', story:'he\\'d chop the top off with one swing of his knife and hand it over before you even finished asking. never spilled a drop.', },
-    { name:'Simran', flavor:'jamun', title:'purple tongues, july', story:'we\\'d climb the neighbour\\'s tree for jamuns and come home with tongues so purple our mothers thought we\\'d eaten ink.', },
-    { name:'Devika', flavor:'santra', title:'winter sun, terrace floor', story:'peeling santras on the terrace floor in december sun is the closest i\\'ve come to doing absolutely nothing and loving it.', },
-    { name:'Rohan', flavor:'golgappa water', title:'tuesday tuition breaks', story:'my tuition teacher lived above a golgappa stall. i learnt more about pani puri timing than trigonometry, honestly.', },
-    { name:'Ananya', flavor:'kokum', title:'my father\\'s one recipe', story:'dad can\\'t cook a single thing, but he makes kokum sherbet every summer like it\\'s the family secret he was finally trusted with.', },
-    { name:'Farhan', flavor:'jaljeera', title:'the long train platforms', story:'every railway platform between nagpur and delhi has a jaljeera guy shouting the same tune. i still hum it without meaning to.', },
-    { name:'Ishita', flavor:'aamras', title:'the fight over the last bowl', story:'three sisters, one steel bowl of aamras, and a rule that whoever finished homework first got the last pour. i never won.', },
-    { name:'Vikram', flavor:'coconut water', title:'the exam-day ritual', story:'amma made me drink a whole coconut before every board exam. i still can\\'t walk into an exam hall without craving one.', },
-    { name:'Priya', flavor:'other / a food memory', title:'my grandfather\\'s thermos', story:'he carried the same steel thermos to the park every evening. i never knew what was in it — turns out it was just filter coffee and love.', },
+    { name:'Riya', flavor:'aamras', title:'the terrace afternoons', story:"nani would slice mangoes on the terrace while the ceiling fan wasn't invented yet — just her, a hand fan, and a steel glass of aamras." },
+    { name:'Karan', flavor:'jaljeera', title:'the cricket ground stall', story:"one rupee coin, a tiny thela outside the ground, and the sourest jaljeera that ever hit a ten-year-old's tongue after a six." },
+    { name:'Meher', flavor:'kokum', title:'monsoon at the window', story:"grandmother's kokum sherbet always appeared right when the first thunder rolled in, like she could smell rain before it fell." },
+    { name:'Aarav', flavor:'coconut water', title:'the beach shack uncle', story:"he'd chop the top off with one swing of his knife and hand it over before you even finished asking. never spilled a drop." },
+    { name:'Simran', flavor:'jamun', title:'purple tongues, july', story:"we'd climb the neighbour's tree for jamuns and come home with tongues so purple our mothers thought we'd eaten ink." },
+    { name:'Devika', flavor:'santra', title:'winter sun, terrace floor', story:"peeling santras on the terrace floor in december sun is the closest i've come to doing absolutely nothing and loving it." },
+    { name:'Rohan', flavor:'golgappa water', title:'tuesday tuition breaks', story:"my tuition teacher lived above a golgappa stall. i learnt more about pani puri timing than trigonometry, honestly." },
+    { name:'Ananya', flavor:'kokum', title:'my father\'s one recipe', story:"dad can't cook a single thing, but he makes kokum sherbet every summer like it's the family secret he was finally trusted with." },
+    { name:'Farhan', flavor:'jaljeera', title:'the long train platforms', story:"every railway platform between nagpur and delhi has a jaljeera guy shouting the same tune. i still hum it without meaning to." },
+    { name:'Ishita', flavor:'aamras', title:'the fight over the last bowl', story:"three sisters, one steel bowl of aamras, and a rule that whoever finished homework first got the last pour. i never won." },
+    { name:'Vikram', flavor:'coconut water', title:'the exam-day ritual', story:"amma made me drink a whole coconut before every board exam. i still can't walk into an exam hall without craving one." },
+    { name:'Priya', flavor:'other / a food memory', title:'my grandfather\'s thermos', story:"he carried the same steel thermos to the park every evening. i never knew what was in it — turns out it was just filter coffee and love." },
   ];
 
   const grid = document.getElementById('galleryGrid');
